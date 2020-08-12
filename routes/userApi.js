@@ -59,7 +59,7 @@ async (req, res, next) => {
 router.post("/register", async (req, res) => {
   const user = new User(req.body);
   const unique = await User.findOne({ email: req.body.email });
-  if (unique) return res.status(400).send({ message: "email already in use" });
+  if (unique) return res.status(400).send({ message: "Email already in use, Please use another email!" });
 
   let salt = await bcrypt.genSalt(10);
   user.password = await bcrypt.hash(user.password, salt);

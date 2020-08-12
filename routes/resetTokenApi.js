@@ -56,7 +56,7 @@ routerPass.post(
         { encoding: "utf8" }
       );
       const username = user.firstName;
-      const link = 'https://localhost:4200/forgot-password/' + resetToken._id;
+      const link = 'http://localhost:4200/#/reset-password/' + resetToken._id;
       const mailParameters = { 
           firstName: username,
           link : link
@@ -65,13 +65,13 @@ routerPass.post(
       // send mail with defined transport object
       let info = transporter.sendMail({
         from: '"Saidane Aymen 👻" <aymensaidane2@gmail.com>',
-        to: "aymensaidane2@gmail.com",
+        to: user.email ,
         subject: "Hello ✔",
         html: html,
       });
         
           res.status(200).send({
-            message: "Reset Password successfully.",
+            message: "Please check your email !",
             token: resetToken.resetToken,
           });
 
