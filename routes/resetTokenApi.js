@@ -24,8 +24,7 @@ routerPass.post(
     }
 
     const resetToken = new ResetToken({
-      resetToken: crypto.randomBytes(16).toString("hex"),
-      code: Math.floor(Math.random() * 10000),
+      resetToken: crypto.randomBytes(16).toString("hex")
     });
     const userUpd = await User.findOneAndUpdate(
         { email: req.body.email },
@@ -56,7 +55,7 @@ routerPass.post(
         { encoding: "utf8" }
       );
       const username = user.firstName;
-      const link = 'http://localhost:4200/#/reset-password/' + resetToken._id;
+      const link = 'http://localhost:4200/#/reset-password/' + resetToken.resetToken ;
       const mailParameters = { 
           firstName: username,
           link : link
@@ -71,8 +70,7 @@ routerPass.post(
       });
         
           res.status(200).send({
-            message: "Please check your email !",
-            token: resetToken.resetToken,
+            message: "Please check your email !"
           });
 
       });
@@ -81,11 +79,12 @@ routerPass.post(
 
   routerPass.post(
   '/newPassword', async (req, res) =>  {
-    ResetToken.findOne({ resetToken: req.body.token }, async function (
+    ResetToken.findOne({ resettoken: req.body.resetToken }, async function (
       err,
       userToken,
       next
-    ) {
+    ) { 
+      console.log(userToken)
       const user = await User.findOne({ resetToken: userToken._id });
       if (!user) {
         return res.status(409).json({ message: "Token has expired" });

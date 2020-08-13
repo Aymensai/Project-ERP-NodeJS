@@ -16,7 +16,7 @@ var userSchema = new Schema({
   },
   resetToken: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "RestToken",
+    ref: "ResetToken",
   },
 }, { timestamps: true });
 
