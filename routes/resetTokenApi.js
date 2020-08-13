@@ -79,12 +79,15 @@ routerPass.post(
 
   routerPass.post(
   '/newPassword', async (req, res) =>  {
-    ResetToken.findOne({ resettoken: req.body.resetToken }, async function (
+    ResetToken.findOne({ resetToken: req.body.resetToken }, async function (
       err,
       userToken,
       next
     ) { 
-      
+      if (userToken === null || userToken === undefined)
+      {
+        return res.status(409).json({ message: "This link has been expired, please retry again!" });
+      }
       const user = await User.findOne({ resetToken: userToken._id });
       if (!user) {
         return res.status(409).json({ message: "Token has expired" });
