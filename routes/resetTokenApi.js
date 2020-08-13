@@ -84,7 +84,7 @@ routerPass.post(
       userToken,
       next
     ) { 
-      console.log(userToken)
+      
       const user = await User.findOne({ resetToken: userToken._id });
       if (!user) {
         return res.status(409).json({ message: "Token has expired" });
