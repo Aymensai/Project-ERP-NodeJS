@@ -8,7 +8,7 @@ var userSchema = new Schema({
   adresse :{ type: String, required: true },
   phoneNumber : { type: Number, required: true },
   email:  { type: String, required: true },
-  password: { type: String, required: true },
+  password: { type: String},
   role: { type: String, default: "User" },
   candidatesIds: {
     type: mongoose.Schema.Types.ObjectId,

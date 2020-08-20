@@ -51,7 +51,6 @@ async (req, res, next) => {
     { _id: req.params.idEtablissement },
     { $push: { candidatesIds: req.params.idCandidate } }
   ).then((user) => {
-    console.log(user);
     res.send(user);
   });
 });
