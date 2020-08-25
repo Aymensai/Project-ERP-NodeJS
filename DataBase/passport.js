@@ -5,15 +5,12 @@ const User = require("../models/userSchema");
 const jwt = require("jsonwebtoken");
 module.exports = 
 passport.use(new BearerStrategy((token, done) => {
-    jwt.verify(token, 'secret', { algorithm: 'RS256'}, (err, decoded) => {
-      console.log(decoded)
+    jwt.verify(token, 'secret', (err, decoded) => {
       if (err) {
         console.log(err)
         return done(null, false);
       } 
-      console.log(token)
-      User.findById({ _id: decoded.data._id }, (err, user) => {
-        console.log(user)
+      User.findById(decoded.data._id, (err, user) => {
         if (!user) {
           return done(null, false);
         }
