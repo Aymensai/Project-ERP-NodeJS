@@ -3,8 +3,7 @@ const Schema = mongoose.Schema;
 
 var userSchema = new Schema({
   etablissement :  { type: String, },
-  firstName:  { type: String, },
-  lastName: { type: String, },
+
   adresse :{ type: String, required: true },
   phoneNumber : { type: Number, required: true },
   email:  { type: String, required: true },
@@ -12,7 +11,7 @@ var userSchema = new Schema({
   role: { type: String, default: "User" },
   candidatesIds: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
+    ref: "Candidate",
   },
   resetToken: {
     type: mongoose.Schema.Types.ObjectId,

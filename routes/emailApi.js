@@ -8,7 +8,7 @@ const routerMail = express.Router();
 const passport = require("passport");
 
 routerMail.post(
-  "/sendMail/:name",
+  "/sendMail/",
   passport.authenticate("bearer", { session: false }),
   async (req, res, next) => {
     let testAccount = await nodemailer.createTestAccount();

@@ -6,7 +6,7 @@ const uploadPicture = require("./routes/fileApi");
 const dataBase = require("./DataBase/db");
 const routerPass = require("./routes/resetTokenApi");
 const cors = require('cors'); 
-
+const candidate = require("./routes/candidateApi");
 const passport = require("passport");
 
 require("./DataBase/passport");
@@ -23,7 +23,7 @@ app.use("/", routerMail);
 app.use("/", routes);
 app.use("/", uploadPicture);
 app.use("/", routerPass);
-
+app.use("/", candidate);
 
 
 app.listen(3000, function () {
