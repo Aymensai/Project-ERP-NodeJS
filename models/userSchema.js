@@ -8,7 +8,9 @@ var userSchema = new Schema(
     phoneNumber: { type: Number, required: true },
     email: { type: String, required: true },
     password: { type: String, required: true },
+    picture : {type: String, default: 'assets/img/avatars/6.jpg'},
     role: { type: String, default: "User" },
+    
     candidatesIds: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Candidate",

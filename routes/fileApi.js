@@ -4,6 +4,7 @@ const express = require("express");
 const uploadPicture = express.Router();
 const File = require("../models/fileSchema");
 const passport = require("passport");
+const Etablissement = require("../models/userSchema");
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "uploads/");
@@ -13,7 +14,7 @@ const storage = multer.diskStorage({
   },
 });
 
-var upload = multer({ storage: storage });
+const upload = multer({ storage: storage });
 
 uploadPicture.post(
   "/uploadfile",
@@ -67,4 +68,27 @@ uploadPicture.get(
   }
 );
 
+uploadPicture.post(
+  "/upload/:id",
+  upload.single("picture"),
+  (req, res) => {
+    if (!req.file) return res.send({ message: "Please upload a file" });
+    else {
+      const link = "http://localhost:3000/upload/" + req.file.filename;
+      return Etablissement.findByIdAndUpdate(
+        req.params.id,
+        { $set: { picture : link } },
+        (err, resultat) => {
+          if (err) {
+            res.send(err);
+          }
+          Etablissement.findById(req.params.id,(err,resultat2)=>{
+                    res.send(resultat2);
+                    
+                });
+        }
+      );
+    }
+  }
+  );
 module.exports = uploadPicture;
