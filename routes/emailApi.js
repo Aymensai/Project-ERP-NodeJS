@@ -6,9 +6,10 @@ const fs = require("fs");
 const path = require("path");
 const routerMail = express.Router();
 const passport = require("passport");
-
+const candidateSchema = require("../models/candidateSchema");
+const candidate = require("../models/candidateSchema");
 routerMail.post(
-  "/sendMail/",
+  "/sendMail",
   passport.authenticate("bearer", { session: false }),
   async (req, res, next) => {
     let testAccount = await nodemailer.createTestAccount();
@@ -24,23 +25,28 @@ routerMail.post(
         rejectUnauthorized: false,
       },
     });
+    
+    
+    candidateSchema.find().then((candidates)=>{
+      if (candidates!=null && candidates!=undefined && candidates.length > 0) {
+        candidates.forEach((candidate)=>{
+        
+         
+          // send mail with defined transport object
+          let info =  transporter.sendMail({
+            from: '"Saidane Aymen 👻" <aymensaidane2@gmail.com>',
+            to: candidate.email,
+            subject: req.body.subject,
+            text: req.body.content,
+          });
 
-    const mailtemplate = fs.readFileSync(
-      path.resolve("./noTif", "mailNotif.html"),
-      { encoding: "utf8" }
-    );
-    const username = req.params.name;
-    const mailParameters = { username: username };
-    const html = ejs.render(mailtemplate, mailParameters);
-    // send mail with defined transport object
-    let info = await transporter.sendMail({
-      from: '"Saidane Aymen 👻" <aymensaidane2@gmail.com>',
-      to: "aymensaidane2@gmail.com",
-      subject: "Hello ✔",
-      html: html,
+        });
+        res.send({ message: "the email is sent!" });
+      }
     });
-
-    res.send({ message: "the email is sent!" });
+ 
+   
+    
   }
 );
 
