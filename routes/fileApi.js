@@ -58,15 +58,18 @@ uploadPicture.get(
   }
 );
 
-uploadPicture.get(
-  "/photo/:id",
-  passport.authenticate("bearer", { session: false }),
-  (req, res) => {
-    File.findByIdAndUpdate({ _id: req.params.id }, req.body).then((file) => {
-      res.send(file);
-    });
-  }
-);
+// uploadPicture.get(
+//   "/upload/:id",
+//   // passport.authenticate("bearer", { session: false }),
+//   (req, res) => {
+//     File.findById({ _id: req.params.id }, req.body).then((file) => {
+//       res.send(file);
+//     });
+//   }
+// );
+// uploadPicture.get("/upload/:id", function(req, res) {
+//   res.sendFile(__dirname + '/upload/:id');
+// })
 
 uploadPicture.post(
   "/upload/:id",
@@ -74,7 +77,7 @@ uploadPicture.post(
   (req, res) => {
     if (!req.file) return res.send({ message: "Please upload a file" });
     else {
-      const link = "http://localhost:3000/upload/" + req.file.filename;
+      const link = "http://localhost:3000/uploads/" + req.file.filename;
       return Etablissement.findByIdAndUpdate(
         req.params.id,
         { $set: { picture : link } },

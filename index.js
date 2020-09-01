@@ -8,7 +8,7 @@ const routerPass = require("./routes/resetTokenApi");
 const cors = require('cors'); 
 const candidate = require("./routes/candidateApi");
 const passport = require("passport");
-
+const path = require("path");
 require("./DataBase/passport");
 const app = express();
 app.use(cors());
@@ -24,8 +24,8 @@ app.use("/", routes);
 app.use("/", uploadPicture);
 app.use("/", routerPass);
 app.use("/", candidate);
-
+app.use('/uploads',express.static('uploads'));
 
 app.listen(3000, function () {
-  console.log("Example app listening on port 3000!");
+  console.log("app listening on port 3000!");
 });
